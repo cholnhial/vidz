@@ -1,0 +1,13 @@
+[Desktop Entry]
+_Name=Vidz
+_GenericName=Movie Library
+_X-GNOME-FullName=Vidz Movie Library
+_Comment=A simple, but yet powerful movie library
+_Keywords=Video;Movie;Library;
+Exec=vidz
+Icon=vidz
+StartupNotify=true
+Terminal=false
+Type=Application
+Categories=AudioVideo;Player;Video;
+Version=0.1

@@ -353,7 +353,7 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS = \
 	 -Wall\
-	 -g
+	 -std=c99
 
 vidz_SOURCES = \
 	main.c \
@@ -734,6 +734,8 @@ uninstall-am: uninstall-binPROGRAMS uninstall-local uninstall-uiDATA
 	pdf pdf-am ps ps-am tags tags-am uninstall uninstall-am \
 	uninstall-binPROGRAMS uninstall-local uninstall-uiDATA
 
+	 -O2
+	 -g
 
 # Remove ui directory on uninstall
 uninstall-local:

@@ -34,6 +34,8 @@ DISTCLEANFILES = intltool-extract \
 	po/.intltool-merge-cache \
 	vidz.desktop
 
+CFLAGS = "-std=c99"
+
 
 # Remove doc directory on uninstall
 uninstall-local:

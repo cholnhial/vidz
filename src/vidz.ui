@@ -127,6 +127,7 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="border_width">5</property>
                 <property name="image">browse_btn_image</property>
                 <property name="xalign">0.49000000953674316</property>
                 <property name="yalign">0.54000002145767212</property>

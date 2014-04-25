@@ -15,6 +15,8 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS =\
 	 -Wall\
+	 -std=c99
+	 -O2
 	 -g
 
 bin_PROGRAMS = vidz

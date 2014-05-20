@@ -4,6 +4,7 @@
 #include "vidz.h"
 
 extern GSList* local_movies_list;
+static movie_selected = FALSE;
 
 void on_main_window_add_button_clicked(GtkWidget* button, gpointer user_data)
 {
@@ -20,6 +21,7 @@ void on_add_dialog_ok_button_clicked(GtkWidget* button, gpointer user_data)
 
 	g_thread_new("add_movie_thread",  add_movie_thread, NULL);
 }
+
 void on_main_window_browse_button_clicked(GtkWidget* button, gpointer user_data)
 {
 
@@ -47,75 +49,10 @@ void on_main_window_browse_button_clicked(GtkWidget* button, gpointer user_data)
 
 void on_main_window_remove_button_clicked(GtkWidget* button, gpointer user_data)
 {
-	GtkIconView* iconview = GTK_ICON_VIEW(gui_get_widget (ICONVIEW));
-	GSList* selected_items;
-	GtkTreeModel* icon_list_store;
-	GtkTreeIter iter;
 
-
-
-	selected_items = gtk_icon_view_get_selected_items(iconview);
-	icon_list_store = gtk_icon_view_get_model(iconview);
-
-	/* Issue a warning before removing the word */
-	int response = gui_show_generic_msg_dialog(
-	                                           GTK_MESSAGE_WARNING,
-	                                           GTK_BUTTONS_YES_NO,
-	                                           "Remove Movie(s)?",
-	                                           WARNING_REMOVE_MOVIE
-	                                           );
-
-	switch(response) {
-		case GTK_RESPONSE_YES:
-		{
-			/* proceed */
-			break;
-		}
-
-		case GTK_RESPONSE_NO:
-		{
-			return;
-		}
-
-	}
-
-
-	for(GSList* i = selected_items; i != NULL; i = i->next) {
-		GtkTreePath* path = (GtkTreePath*) i->data;
-
-		if(gtk_tree_model_get_iter (icon_list_store, &iter, path)) {
-			GdkPixbuf* cover_image;
-			gchar* movie_name = g_malloc(MAX_MOVIE_NAME);
-			gchar* text;
-			gtk_tree_model_get(icon_list_store, &iter, COL_MOVIE_INFO, &text, -1);
-			parse_string(text, movie_name, "<b>", '<');
-
-			vidz_moviedata_t* moviedata = g_object_get_data (G_OBJECT(iconview), movie_name);
-
-			/* remove from the view */
-			gtk_list_store_remove(icon_list_store, &iter);
-			/* remove from database */
-			if(!vidz_manager_remove_movie (moviedata->id)) {
-				g_critical("Unable to remove movie from the database");
-			}
-
-			/* remove from the local list */
-			local_movies_list = g_slist_remove(local_movies_list, moviedata);
-			g_printf("Local List Size: %d\n", g_slist_length(local_movies_list));
-
-			vidz_manager_free_moviedata (moviedata);
-			g_free(movie_name);
-			g_free(text);
-		}
-
-	}
-
-	/* check if the list is empty */
-	if(!gtk_tree_model_get_iter_first(icon_list_store, &iter)) {
-		/* make some buttons insensitive until, a movie is added */
-		gui_activate_action_buttons (FALSE);
-	}
-
+	/* Remove the movie from the the icon view, and also
+	 * from the database */
+	gui_remove_selected_movie ();
 
 }
 
@@ -242,7 +179,20 @@ void on_main_window_icon_view_selection_changed(GtkIconView* iconview, gpointer 
 	selected_items = gtk_icon_view_get_selected_items(iconview);
 	if(g_slist_length (selected_items) == 0) {
 		gui_activate_action_buttons (FALSE);
+		movie_selected = FALSE;
 	} else {
 		gui_activate_action_buttons (TRUE);
+		movie_selected = TRUE;
 	}
+}
+
+void on_main_window_icon_view_key_press(GtkWidget* widget, GdkEventKey* event, gpointer user_data)
+{
+	// First check if a movie is selected
+	if(movie_selected) {
+		if(event->keyval == GDK_KEY_Delete) {
+			gui_remove_selected_movie ();
+		}
+	}
+
 }

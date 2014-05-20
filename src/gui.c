@@ -1,5 +1,7 @@
 #include "gui.h"
 #include "threads.h"
+#include "vidz.h"
+
 /*globals */
 static GtkBuilder* builder;
 static GtkWidget* mainwindow;
@@ -331,4 +333,88 @@ GtkWidget* gui_get_widget(gchar* widget_name)
 	}
 
 	return widget;
+}
+
+/**
+ *  gui_remove_selected_movie()
+ *	
+ *	Removes selected movies from the icon view
+ *	and from the database
+ *  
+ *  
+ *
+ *  Paramaters:
+ *   none
+ *  returns:
+ *   none
+ **/
+void gui_remove_selected_movie()
+{
+	GtkIconView* iconview = GTK_ICON_VIEW(gui_get_widget (ICONVIEW));
+	GSList* selected_items;
+	GtkTreeModel* icon_list_store;
+	GtkTreeIter iter;
+
+
+
+	selected_items = gtk_icon_view_get_selected_items(iconview);
+	icon_list_store = gtk_icon_view_get_model(iconview);
+
+	/* Issue a warning before removing the word */
+	int response = gui_show_generic_msg_dialog(
+	                                           GTK_MESSAGE_WARNING,
+	                                           GTK_BUTTONS_YES_NO,
+	                                           "Remove Movie(s)?",
+	                                           WARNING_REMOVE_MOVIE
+	                                           );
+
+	switch(response) {
+		case GTK_RESPONSE_YES:
+		{
+			/* proceed */
+			break;
+		}
+
+		case GTK_RESPONSE_NO:
+		{
+			return;
+		}
+
+	}
+
+
+	for(GSList* i = selected_items; i != NULL; i = i->next) {
+		GtkTreePath* path = (GtkTreePath*) i->data;
+
+		if(gtk_tree_model_get_iter (icon_list_store, &iter, path)) {
+			GdkPixbuf* cover_image;
+			gchar* movie_name = g_malloc(MAX_MOVIE_NAME);
+			gchar* text;
+			gtk_tree_model_get(icon_list_store, &iter, COL_MOVIE_INFO, &text, -1);
+			parse_string(text, movie_name, "<b>", '<');
+
+			vidz_moviedata_t* moviedata = g_object_get_data (G_OBJECT(iconview), movie_name);
+
+			/* remove from the view */
+			gtk_list_store_remove(icon_list_store, &iter);
+			/* remove from database */
+			if(!vidz_manager_remove_movie (moviedata->id)) {
+				g_critical("Unable to remove movie from the database");
+			}
+
+			/* remove from the local list */
+			local_movies_list = g_slist_remove(local_movies_list, moviedata);
+
+			vidz_manager_free_moviedata (moviedata);
+			g_free(movie_name);
+			g_free(text);
+		}
+
+	}
+
+	/* check if the list is empty */
+	if(!gtk_tree_model_get_iter_first(icon_list_store, &iter)) {
+		/* make some buttons insensitive until, a movie is added */
+		gui_activate_action_buttons (FALSE);
+	}
 }

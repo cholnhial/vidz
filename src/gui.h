@@ -192,4 +192,20 @@ void gui_activate_action_buttons(gboolean activate);
  **/
 int gui_show_generic_msg_dialog(GtkMessageType type,  GtkButtonsType buttons, gchar* title, gchar * msg);
 GtkWidget* gui_get_widget(gchar* widget_name);
+
+/**
+ *  gui_remove_selected_movie()
+ *	
+ *	Removes selected movies from the icon view
+ *	and from the database
+ *  
+ *  
+ *
+ *  Paramaters:
+ *   none
+ *  returns:
+ *   none
+ **/
+void gui_remove_selected_movie();
+
 #endif /* GUI_H_ */

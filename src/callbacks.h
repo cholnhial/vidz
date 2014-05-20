@@ -20,4 +20,6 @@ void on_main_window_about_button_clicked(GtkButton* button, gpointer user_data);
 void on_main_window_quit_button_clicked(GtkButton* button, gpointer user_data);
 
 void on_main_window_icon_view_selection_changed(GtkIconView* iconview, gpointer user_data);
+
+void on_main_window_icon_view_key_press(GtkWidget* widget, GdkEventKey* event, gpointer user_data);
 #endif /* CALLBACKS_H_ */

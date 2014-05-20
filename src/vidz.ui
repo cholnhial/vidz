@@ -307,6 +307,7 @@
                 <property name="item_width">80</property>
                 <property name="column_spacing">0</property>
                 <signal name="selection-changed" handler="on_main_window_icon_view_selection_changed" swapped="no"/>
+                <signal name="key-press-event" handler="on_main_window_icon_view_key_press" swapped="no"/>
               </object>
             </child>
           </object>

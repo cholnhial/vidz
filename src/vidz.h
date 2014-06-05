@@ -25,7 +25,7 @@
 
 #define PROGRAM_NAME "vidz" /* executable name too*/
 #define PROGRAM_NAME_DESKTOP "Vidz"
-#define PROGRAM_VERSION "0.1"
+#define PROGRAM_VERSION "0.2"
 #define MOVIES_DB_FILE "library.db"
 #define COVERS_DIR_NAME "covers"
 #define VIDZ_MOVIE_TABLE "Movies"

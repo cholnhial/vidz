@@ -1,6 +1,7 @@
 #include "gui.h"
 #include "threads.h"
 #include "vidz.h"
+#include "callbacks.h"
 
 /*globals */
 static GtkBuilder* builder;
@@ -15,6 +16,8 @@ static GtkEntry* movie_search_entry;
 static GtkWidget* play_btn;
 static GtkWidget* remove_btn;
 GSList* local_movies_list = NULL;
+static GtkTreeModel * filter;
+
 
 /**
  *  gui_init()
@@ -53,9 +56,13 @@ gboolean gui_init()
 	play_btn = gui_get_widget (PLAY_BTN);
 
 	remove_btn = gui_get_widget (REMOVE_BTN);
-
+	movie_search_entry = gui_get_widget (MOVIE_SEARCH_ENTRY);
+	
 	/* Connect the signal handlers */
 	gtk_builder_connect_signals(builder, NULL);
+
+	/* Connect extra signals */
+	g_signal_connect(G_OBJECT(movie_search_entry), "changed", on_main_window_entry_changed, iconview);
 
 	/* Show main window */
 	gui_show_main_window ();
@@ -153,7 +160,8 @@ void gui_hide_progress_dialog()
  *    none
  **/
 void gui_init_icon_view()
-{
+{   
+
 	icon_list_store = gtk_list_store_new(NUM_COLS, 
 	                                     G_TYPE_STRING, GDK_TYPE_PIXBUF);
 
@@ -166,6 +174,12 @@ void gui_init_icon_view()
 	gtk_icon_view_set_selection_mode(iconview, GTK_SELECTION_MULTIPLE);
 
 	gtk_widget_show_all(GTK_WIDGET(iconview));
+	
+	/* Set up filter callback */
+	 filter =  gtk_tree_model_filter_new(GTK_TREE_MODEL(icon_list_store), NULL);
+	 gtk_tree_model_filter_set_visible_func (GTK_TREE_MODEL_FILTER(filter),
+     on_main_window_icon_view_filter, iconview, NULL);
+	gtk_icon_view_set_model (iconview, filter);
 
 	/* Load contents from the database */
 	g_thread_new("load_movie_list_thread",  load_movie_list_thread, NULL);
@@ -417,4 +431,38 @@ void gui_remove_selected_movie()
 		/* make some buttons insensitive until, a movie is added */
 		gui_activate_action_buttons (FALSE);
 	}
+}
+
+/**
+ *  gui_icon_view_get_list_model_filter()
+ *	
+ *	Returns the tree model filter
+ *	for the iconView icons.
+ *  
+ *  
+ *
+ *  Paramaters:
+ *   none
+ *  returns:
+ *   a pointer to GtkTreeModelFilter
+ **/
+GtkTreeModelFilter* gui_icon_view_get_list_model_filter()
+{   
+	return filter;
+}
+
+/**
+ *  gui_get_movie_search_entry()
+ *	
+ *	Returns the search entry pointer
+ *  
+ *
+ *  Paramaters:
+ *   none
+ *  returns:
+ *   a pointer to GtkEntry
+ **/
+GtkEntry* gui_get_movie_search_entry()
+{
+	return movie_search_entry;
 }

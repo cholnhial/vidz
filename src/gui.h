@@ -9,6 +9,7 @@
 
 #define MAIN_WINDOW "mainwindow"
 #define ICONVIEW "iconview"
+#define MOVIE_SEARCH_ENTRY "movie_search_entry"
 #define PROGRESS_DIALOG "progress_dialog"
 #define ADD_DIALOG_MOVIE_ENTRY "add_dialog_movie_name_entry"
 #define ADD_DIALOG_FILE_ENTRY "add_dialog_file_name_entry"
@@ -207,5 +208,33 @@ GtkWidget* gui_get_widget(gchar* widget_name);
  *   none
  **/
 void gui_remove_selected_movie();
+
+/**
+ *  gui_icon_view_get_list_model_filter()
+ *	
+ *	Returns the tree model filter
+ *	for the iconView icons.
+ *  
+ *  
+ *
+ *  Paramaters:
+ *   none
+ *  returns:
+ *   a pointer to GtkTreeModelFilter
+ **/
+GtkTreeModelFilter* gui_icon_view_get_list_model_filter();
+
+/**
+ *  gui_get_movie_search_entry()
+ *	
+ *	Returns the search entry pointer
+ *  
+ *
+ *  Paramaters:
+ *   none
+ *  returns:
+ *   a pointer to GtkEntry
+ **/
+GtkEntry* gui_get_movie_search_entry();
 
 #endif /* GUI_H_ */

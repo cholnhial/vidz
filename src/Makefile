@@ -208,7 +208,7 @@ CATALOGS =
 CATOBJEXT = .gmo
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -O2 -std=gnu99
+CFLAGS = -g -O2
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -353,7 +353,8 @@ AM_CPPFLAGS = \
 
 AM_CFLAGS = \
 	 -Wall\
-	 -g
+	 -std=gnu99 \
+	 -O2
 
 vidz_SOURCES = \
 	main.c \

@@ -1,2 +1,9 @@
 
+Version 0.2:
+
+* Added the search capability now you can find all your movies in the pile
+  - it filters out when you type in the search box, a fast way to search
+* Added a key shortcut function, which now allows you to press the delete
+  key to delete the selected movie(s). Soon more shortcuts will be added/
+
 

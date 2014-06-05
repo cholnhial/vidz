@@ -2,6 +2,7 @@
 #include "threads.h"
 #include "vidz_manager.h"
 #include "vidz.h"
+#include "gui.h"
 
 extern GSList* local_movies_list;
 static movie_selected = FALSE;
@@ -195,4 +196,76 @@ void on_main_window_icon_view_key_press(GtkWidget* widget, GdkEventKey* event, g
 		}
 	}
 
+}
+
+void on_main_window_entry_changed(GtkWidget* entry, gpointer user_data)
+{
+	gchar* text;
+	gchar* filter_text;
+	gchar* old_filter_text;
+	gchar* normalized;
+	GtkTreeModel* model;
+	GtkIconView* iconview = GTK_ICON_VIEW(user_data);
+
+	text = gtk_entry_get_text (GTK_ENTRY(entry));
+	if (text == NULL || *text == '\0')
+	{
+		filter_text = NULL;
+	}
+	else
+	{
+		/* create independent search string */
+		normalized = g_utf8_normalize (text, -1, G_NORMALIZE_DEFAULT);
+		filter_text = g_utf8_casefold (normalized, -1);
+		g_free (normalized);
+
+	}
+	old_filter_text = 	 g_object_get_data(G_OBJECT(iconview), "filter-text");
+	/* check if we need to update */
+	if (g_strcmp0 (old_filter_text, filter_text) != 0)
+	{
+		/* set new filter */
+		g_free (old_filter_text);
+		old_filter_text = filter_text;
+		 /* set the new pointer */
+		g_object_set_data(G_OBJECT(iconview), "filter-text", old_filter_text);
+		
+		/* update model filters */
+		model = gtk_icon_view_get_model(iconview);
+		gtk_tree_model_filter_refilter (gui_icon_view_get_list_model_filter ());
+
+	}
+	else
+	{  
+		g_free (filter_text);
+	}
+
+}
+
+gboolean
+on_main_window_icon_view_filter (GtkTreeModel *model,
+                                 GtkTreeIter  *iter,
+                                 gpointer      data)
+{
+
+	GValue          cat_val = { 0, };
+	GValue          filter_val = { 0, };
+	gboolean        visible;
+	gchar    *filter_text = g_object_get_data(G_OBJECT(data), "filter-text");
+	char*  text;
+	visible = TRUE;
+	
+	/* filter search string */
+	if (filter_text != NULL)
+	{
+	    gtk_tree_model_get_value (model, iter, COL_MOVIE_INFO, &filter_val);
+        text = g_value_get_string (&filter_val);
+		GString* lower_case_str = g_string_new(text);
+		lower_case_str = g_string_down(lower_case_str); /* make the string lowercase for comparison */
+		visible = strstr(lower_case_str->str, filter_text) != NULL;
+		g_value_unset (&filter_val);
+		g_string_free(lower_case_str, TRUE);
+	}
+
+	return visible;
 }

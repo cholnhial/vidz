@@ -35,7 +35,6 @@ main (int argc, char *argv[])
 	}
 
 	gui_init();
-
 	gtk_main();
 
 	return 0;	

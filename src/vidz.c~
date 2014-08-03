@@ -196,7 +196,7 @@ void vidz_play_movie(gchar* filename)
 
 	
 	if(!g_spawn_async (NULL, argv, NULL,
-	                   G_SPAWN_SEARCH_PATH, NULL, NULL, NULL, &gerror)) {
+	                   G_SPAWN_SEARCH_PATH_FROM_ENVP, NULL, NULL, NULL, &gerror)) {
 
 		g_critical("Error spawning process: %s\n", gerror->message);
 		//g_error_free(gerror);

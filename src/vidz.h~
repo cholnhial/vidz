@@ -31,7 +31,7 @@
 #define VIDZ_MOVIE_TABLE "Movies"
 #define MAX_MOVIE_NAME 256
 #define DEFAULT_MOVIE_PLAYER "mplayer"
-#define DEFAULT_COVER_IMAGE "/usr/share/local/vidz/pixmaps/default.png"
+#define DEFAULT_COVER_IMAGE 
 /**
  *  vidz_init()
  *	

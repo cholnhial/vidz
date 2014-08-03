@@ -540,7 +540,10 @@ vidz.o: vidz.c vidz.h /usr/include/gtk-3.0/gtk/gtk.h \
  /usr/include/gtk-3.0/gtk/deprecated/gtkvpaned.h \
  /usr/include/gtk-3.0/gtk/deprecated/gtkvscale.h \
  /usr/include/gtk-3.0/gtk/deprecated/gtkvscrollbar.h \
- /usr/include/gtk-3.0/gtk/deprecated/gtkvseparator.h \
+ /usr/include/gtk-3.0/gtk/deprecated/gtkvseparator.h vidz_manager.h \
+ database.h /usr/include/sqlite3.h /usr/include/string.h \
+ /usr/include/bits/string.h /usr/include/bits/string2.h \
+ /usr/include/stdlib.h /usr/include/bits/string3.h vidz_movieinfo.h \
  /usr/include/curl/curl.h /usr/include/curl/curlver.h \
  /usr/include/curl/curlbuild.h /usr/include/sys/socket.h \
  /usr/include/sys/uio.h /usr/include/bits/uio.h \
@@ -551,10 +554,7 @@ vidz.o: vidz.c vidz.h /usr/include/gtk-3.0/gtk/gtk.h \
  /usr/include/sys/time.h /usr/include/curl/easy.h \
  /usr/include/curl/multi.h /usr/include/curl/curl.h \
  /usr/include/curl/typecheck-gcc.h /usr/include/glib-2.0/glib/gi18n.h \
- /usr/include/libintl.h /usr/include/locale.h /usr/include/bits/locale.h \
- /usr/include/string.h /usr/include/bits/string.h \
- /usr/include/bits/string2.h /usr/include/stdlib.h \
- /usr/include/bits/string3.h
+ /usr/include/libintl.h /usr/include/locale.h /usr/include/bits/locale.h
 
 vidz.h:
 
@@ -1772,6 +1772,24 @@ vidz.h:
 
 /usr/include/gtk-3.0/gtk/deprecated/gtkvseparator.h:
 
+vidz_manager.h:
+
+database.h:
+
+/usr/include/sqlite3.h:
+
+/usr/include/string.h:
+
+/usr/include/bits/string.h:
+
+/usr/include/bits/string2.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/bits/string3.h:
+
+vidz_movieinfo.h:
+
 /usr/include/curl/curl.h:
 
 /usr/include/curl/curlver.h:
@@ -1817,13 +1835,3 @@ vidz.h:
 /usr/include/locale.h:
 
 /usr/include/bits/locale.h:
-
-/usr/include/string.h:
-
-/usr/include/bits/string.h:
-
-/usr/include/bits/string2.h:
-
-/usr/include/stdlib.h:
-
-/usr/include/bits/string3.h:

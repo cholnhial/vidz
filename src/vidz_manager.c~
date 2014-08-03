@@ -135,7 +135,7 @@ vidz_moviedata_t* vidz_manager_add_movie(gchar* movie_name, gchar* movie_file)
 
 	/* Construct the image filename */
 	if(!g_strcmp0 (movieinfo->image_url->str, "N/A")) {
-		g_string_sprintf(moviedata->cover_image, "%s", DEFAULT_COVER_IMAGE); 
+		g_string_sprintf(moviedata->cover_image, "%s/default.png", "/home/chol/Documents/Projects/vidz/pixmaps"); 
 	} else {
 		g_string_sprintf(moviedata->cover_image, "%s/%s.jpg", movies_cover_path, movieinfo->title->str); 
 		if(!vidz_download_movie_cover(movieinfo->image_url->str, moviedata->cover_image->str)) {

@@ -117,6 +117,8 @@ gboolean add_movie_thread_add_to_view_idle(gpointer user_data)
 
 	gui_add_movie_to_view (moviedata);
 
+	return FALSE;
+
 }
 
 /**

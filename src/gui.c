@@ -45,15 +45,15 @@ gboolean gui_init()
 
 	iconview = GTK_ICON_VIEW(gui_get_widget (ICONVIEW));
 
-	progress_dialog = gui_get_widget (PROGRESS_DIALOG);
+	progress_dialog = GTK_DIALOG(gui_get_widget (PROGRESS_DIALOG));
 
-	add_dialog = gui_get_widget (ADD_DIALOG);
+	add_dialog = GTK_DIALOG(gui_get_widget (ADD_DIALOG));
 
-	add_dialog_movie_entry = gui_get_widget (ADD_DIALOG_MOVIE_ENTRY);
+	add_dialog_movie_entry = GTK_ENTRY(gui_get_widget (ADD_DIALOG_MOVIE_ENTRY));
 
-	add_dialog_movie_file_entry = gui_get_widget (ADD_DIALOG_FILE_ENTRY);
+	add_dialog_movie_file_entry = GTK_ENTRY(gui_get_widget (ADD_DIALOG_FILE_ENTRY));
 
-	play_btn = gui_get_widget (PLAY_BTN);
+	play_btn =  gui_get_widget (PLAY_BTN);
 
 	remove_btn = gui_get_widget (REMOVE_BTN);
 	movie_search_entry = gui_get_widget (MOVIE_SEARCH_ENTRY);
@@ -179,7 +179,7 @@ void gui_init_icon_view()
 	 filter =  gtk_tree_model_filter_new(GTK_TREE_MODEL(icon_list_store), NULL);
 	 gtk_tree_model_filter_set_visible_func (GTK_TREE_MODEL_FILTER(filter),
      on_main_window_icon_view_filter, iconview, NULL);
-	gtk_icon_view_set_model (iconview, filter);
+	 gtk_icon_view_set_model (iconview, filter);
 
 	/* Load contents from the database */
 	g_thread_new("load_movie_list_thread",  load_movie_list_thread, NULL);
@@ -220,7 +220,7 @@ void gui_add_movie_to_view(vidz_moviedata_t* moviedata)
 		g_error_free(gerror);
 	}
 	/* Scale image */
-	GdkPixbuf* scaled_cover_image = gdk_pixbuf_scale_simple (cover_image, 250, 190, GDK_INTERP_HYPER);
+	GdkPixbuf* scaled_cover_image = gdk_pixbuf_scale_simple (cover_image, 123, 190, GDK_INTERP_HYPER);
 
 	/* Add to local list */
 	local_movies_list = g_slist_append(local_movies_list, moviedata);
@@ -366,13 +366,9 @@ void gui_remove_selected_movie()
 {
 	GtkIconView* iconview = GTK_ICON_VIEW(gui_get_widget (ICONVIEW));
 	GSList* selected_items;
-	GtkTreeModel* icon_list_store;
 	GtkTreeIter iter;
 
-
-
 	selected_items = gtk_icon_view_get_selected_items(iconview);
-	icon_list_store = gtk_icon_view_get_model(iconview);
 
 	/* Issue a warning before removing the word */
 	int response = gui_show_generic_msg_dialog(
@@ -401,7 +397,7 @@ void gui_remove_selected_movie()
 		GtkTreePath* path = (GtkTreePath*) i->data;
 
 		if(gtk_tree_model_get_iter (icon_list_store, &iter, path)) {
-			GdkPixbuf* cover_image;
+			//GdkPixbuf* cover_image;
 			gchar* movie_name = g_malloc(MAX_MOVIE_NAME);
 			gchar* text;
 			gtk_tree_model_get(icon_list_store, &iter, COL_MOVIE_INFO, &text, -1);

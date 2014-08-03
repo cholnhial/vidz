@@ -199,7 +199,7 @@ void on_main_window_icon_view_key_press(GtkWidget* widget, GdkEventKey* event, g
 }
 
 void on_main_window_entry_changed(GtkWidget* entry, gpointer user_data)
-{
+{   
 	gchar* text;
 	gchar* filter_text;
 	gchar* old_filter_text;
@@ -261,7 +261,7 @@ on_main_window_icon_view_filter (GtkTreeModel *model,
 	    gtk_tree_model_get_value (model, iter, COL_MOVIE_INFO, &filter_val);
         text = g_value_get_string (&filter_val);
 		GString* lower_case_str = g_string_new(text);
-		lower_case_str = g_string_down(lower_case_str); /* make the string lowercase for comparison */
+		lower_case_str = g_string_ascii_down(lower_case_str); /* make the string lowercase for comparison */
 		visible = strstr(lower_case_str->str, filter_text) != NULL;
 		g_value_unset (&filter_val);
 		g_string_free(lower_case_str, TRUE);

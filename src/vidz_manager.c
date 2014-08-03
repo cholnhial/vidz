@@ -502,7 +502,7 @@ void vidz_manager_cleanup()
 	wait_for_db_access();
 	lock_db_access();
 	sqlite3_close(db);
-	g_mutex_free(&db_access_mutex);
+	g_mutex_clear(&db_access_mutex);
 	initialised = FALSE;
 }
 

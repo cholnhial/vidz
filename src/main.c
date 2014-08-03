@@ -18,6 +18,7 @@
  */
 
 #include <config.h>
+#include <X11/Xlib.h>  
 #include <gtk/gtk.h>
 #include "vidz.h"
 #include "gui.h"

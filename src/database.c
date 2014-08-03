@@ -120,11 +120,9 @@ int database_generic_insert(sqlite3* db, char* query, int nitems, ...)
 				{
 					char* text;
 					int column;
-					size_t sizeof_data;
 
 					text = va_arg(vl, char*);
 					column = va_arg(vl, int);
-					sizeof_data = va_arg(vl, size_t);
 
 					sqlite3_bind_text(stmt, column, text, -1, SQLITE_STATIC);
 					break;
@@ -148,11 +146,9 @@ int database_generic_insert(sqlite3* db, char* query, int nitems, ...)
 				{
 					int integer;
 					int column;
-					size_t sizeof_data;
 
 					integer = va_arg(vl, int);
 					column = va_arg(vl, int);
-					sizeof_data = va_arg(vl, size_t);
 
 					sqlite3_bind_int(stmt,  column, integer);
 					break;
@@ -257,7 +253,6 @@ int database_generic_get(sqlite3* db, char* query, char* key, int nitems, ...)
 						text = va_arg(vl, char**);
 						column = va_arg(vl, int);
 
-						int len = sqlite3_column_bytes(stmt, column);
 						*text = strdup(sqlite3_column_text(stmt, column));
 						if(*text == NULL) {
 							return -1;

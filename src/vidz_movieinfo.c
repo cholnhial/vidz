@@ -116,7 +116,7 @@ vidz_movieinfo_t* vidz_movieinfo_get_info(gchar* movie_name)
 	curl_easy_setopt(curl_hndl, CURLOPT_URL, url->str);
 	curl_easy_setopt(curl_hndl, CURLOPT_WRITEFUNCTION, http_callback);
 	curl_easy_setopt(curl_hndl, CURLOPT_WRITEDATA, resp);
-    curl_easy_setopt(curl_hndl, TIMEOUT
+    //curl_easy_setopt(curl_hndl, TIMEOUT
 
 	int res = curl_easy_perform(curl_hndl);
 	if (res != CURLE_OK) {

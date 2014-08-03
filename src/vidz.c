@@ -17,7 +17,7 @@
  * with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include "vidz.h"
-
+#include "vidz_manager.h"
 #include <curl/curl.h>
 
 #include <glib/gi18n.h>
@@ -188,7 +188,7 @@ void vidz_play_movie(gchar* filename)
 {
 	GError* gerror;
 
-	gchar* argv[2];
+	gchar* argv[3];
 
 	argv[0] = DEFAULT_MOVIE_PLAYER;
 	argv[1] = filename;

@@ -220,7 +220,7 @@ void gui_add_movie_to_view(vidz_moviedata_t* moviedata)
 		g_error_free(gerror);
 	}
 	/* Scale image */
-	GdkPixbuf* scaled_cover_image = gdk_pixbuf_scale_simple (cover_image, 130, 190, GDK_INTERP_HYPER);
+	GdkPixbuf* scaled_cover_image = gdk_pixbuf_scale_simple (cover_image, 250, 190, GDK_INTERP_HYPER);
 
 	/* Add to local list */
 	local_movies_list = g_slist_append(local_movies_list, moviedata);

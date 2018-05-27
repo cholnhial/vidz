@@ -18,3 +18,7 @@ sudo apt-get install libsqlite3-0 libsqlite3-dev
 sudo apt-get install libjson-c-dev libjson-c
 sudo apt-get install mplayer
 ```
+
+# Development Environment
+If you wish to add some code I recommend using Gnome's Anjuta IDE, the project
+used it.

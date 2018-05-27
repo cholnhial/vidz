@@ -1,4 +1,4 @@
-#Screenshots
+# Screenshots
 
 ### Main window
 ![Main Window](/screenshots/mainwindow.png?raw=true "Main Window")

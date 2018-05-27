@@ -1,7 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 dnl Created by Anjuta application wizard.
 
-AC_INIT(vidz, 0.1)
+AC_INIT(vidz, 0.3)
 
 AC_CONFIG_HEADERS([config.h])
 
@@ -31,7 +31,7 @@ LT_INIT
 
 
 
-PKG_CHECK_MODULES(VIDZ, json
+PKG_CHECK_MODULES(VIDZ, json-c
 sqlite3
 libcurl
 [gtk+-3.0 >= 2.90.3 ])

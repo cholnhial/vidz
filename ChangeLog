@@ -5,5 +5,8 @@ Version 0.2:
   - it filters out when you type in the search box, a fast way to search
 * Added a key shortcut function, which now allows you to press the delete
   key to delete the selected movie(s). Soon more shortcuts will be added/
-
+Version 0.3 (2018):
+* http://www.omdbapi.com/ API now requires an API Key, a default API key is
+now added
+* README file contains the Ubuntu dependencies required for the build
 

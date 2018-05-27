@@ -16,6 +16,7 @@ AM_CPPFLAGS = \
 AM_CFLAGS =\
 	 -Wall\
 	 -std=gnu99 \
+	 -lX11\
 	 -O2
 	
 

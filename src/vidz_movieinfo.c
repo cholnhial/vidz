@@ -21,12 +21,12 @@
 #include <stdlib.h>
 
 #include <curl/curl.h>
-#include <json/json.h>
+#include <json-c/json.h>
 
 #include "vidz_movieinfo.h"
 
 #define DATA_BUF_SIZE 4096
-#define URLTEMPLATE "http://www.omdbapi.com/?t=%s"
+#define URLTEMPLATE "http://www.omdbapi.com/?t=%s&i=tt3896198&apikey=7e36d6b8"
 
 static size_t http_callback(char* ptr,
                             size_t count, 
@@ -106,6 +106,7 @@ vidz_movieinfo_t* vidz_movieinfo_get_info(gchar* movie_name)
 		g_critical("Error getting CuRL handle");
 		return NULL;
 	}
+
 
 	/* Construct complete URL for request */
 
